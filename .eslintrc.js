@@ -46,5 +46,6 @@ module.exports = {
 		'comma-spacing': ['error', { before: false, after: true }],
 		'padding-line-between-statements': ['error', { blankLine: 'always', prev: '*', next: 'return' }],
 		'no-tabs': ['error', { allowIndentationTabs: true }],
+		'no-underscore-dangle': ['off'],
 	},
 };
