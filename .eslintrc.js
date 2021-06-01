@@ -7,7 +7,7 @@ module.exports = {
 		node: true,
 	},
 	extends: [
-		'airbnb-base',
+		'eslint:recommended',
 	],
 	parserOptions: {
 		ecmaVersion: 2017,
@@ -46,6 +46,6 @@ module.exports = {
 		'comma-spacing': ['error', { before: false, after: true }],
 		'padding-line-between-statements': ['error', { blankLine: 'always', prev: '*', next: 'return' }],
 		'no-tabs': ['error', { allowIndentationTabs: true }],
-		'no-underscore-dangle': ['off'],
+		'no-async-promise-executor': 'off',
 	},
 };
