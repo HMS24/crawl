@@ -12,6 +12,12 @@
   "dependencies": {
     "bluebird": "3.7.2",
     "node-fetch": "2.6.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-async-await": "0.0.0",
+    "eslint-plugin-import": "^2.23.4"
   }
 }
-，‘．／
