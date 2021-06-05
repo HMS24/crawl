@@ -1,8 +1,10 @@
 
-const fs = require('fs');
-const util = require('util');
-const del = require('del');
 const puppeteer = require('puppeteer');
+const {
+	createDirectoryIfNotExisted,
+	deleteFiles,
+	writeFile,
+} = require('./lib/fs');
 
 const BROWSER_OPTIONS = {
 	headless: false,
@@ -16,6 +18,7 @@ const VIEWPORT = {
 };
 const LIMIT = 30;
 const OUT_DIR = 'output/test';
+const OUT_FILE = `./${OUT_DIR}/crawl.json`;
 const BASE_URL = 'https://sale.591.com.tw/?shType=list&regionid=3&section=50&kind=9&price=1000$_1200$&shape=2&pattern=3&area=40_50&houseage=$_10$&order=price_desc';
 
 (async () => {
@@ -91,10 +94,10 @@ const BASE_URL = 'https://sale.591.com.tw/?shType=list&regionid=3&section=50&kin
 
 		results.forEach(e => e.price = dollarStringToInt(e.price));
 
-		mkdirSync(OUT_DIR);
-		await del([`${OUT_DIR}/*`]);
+		createDirectoryIfNotExisted(OUT_DIR);
 
-		await util.promisify(fs.writeFile)(`./${OUT_DIR}/crawl.json`, JSON.stringify(results, null, '\t'));
+		await deleteFiles([`${OUT_DIR}/*`]);
+		await writeFile(OUT_FILE, JSON.stringify(results, null, '\t'));
 
 		await browser.close();
 	} catch (error) {
@@ -104,21 +107,4 @@ const BASE_URL = 'https://sale.591.com.tw/?shType=list&regionid=3&section=50&kin
 
 function dollarStringToInt(value) {
 	return parseInt(value.split(',').join(''));
-}
-
-function mkdirSync(dirPath) {
-	try {
-		dirPath.split('/').reduce((parentPath, dirName) => {
-			const currentPath = parentPath + dirName;
-			if (!fs.existsSync(currentPath)) {
-				fs.mkdirSync(currentPath);
-			}
-
-			return currentPath + '/';
-		}, '');
-	} catch (error) {
-		if (error.code !== 'EEXIST') {
-			throw error;
-		}
-	}
 }
