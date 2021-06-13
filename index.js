@@ -51,9 +51,9 @@ const OUT_FILE = `./${OUT_DIR}/crawl.json`;
 
 			await scroll(page);
 
-			const nodes = await crawl(page);
+			const houses = await crawl(page);
 
-			results.push(...nodes);
+			results.push(...formatCrawledHouses(houses));
 		}
 
 		createDirectoryIfNotExisted(OUT_DIR);
