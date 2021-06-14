@@ -14,8 +14,10 @@ const {
 } = require('./lib/page');
 const {
 	crawl,
+	crawlDetail,
 	getTotalRows,
 	generateNextPageURL,
+	formatCrawledHouses,
 
 	BASE_URL,
 	ROWS_PER_PAGE,
@@ -52,6 +54,16 @@ const OUT_FILE = `./${OUT_DIR}/crawl.json`;
 			await scroll(page);
 
 			const houses = await crawl(page);
+
+			for (let i = 0, { length } = houses; i < length; i++) {
+				const { href: detailURL } = houses[i];
+
+				await page.goto(detailURL, NAVIGATION_OPTION);
+
+				const details = await crawlDetail(page);
+
+				Object.assign(houses[i], details);
+			}
 
 			results.push(...formatCrawledHouses(houses));
 		}
